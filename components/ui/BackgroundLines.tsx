@@ -1,11 +1,15 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const BackgroundLines = () => {
   const { theme } = useTheme();
-  const color = theme === "light" ? '#121212' : 'var(--neutral-300)';
+  const [color, setColor] = useState<string>();
+  useEffect(() => {
+    setColor(theme === "light" ? "#121212" : "var(--neutral-300)");
+  }, [theme]);
+
   return (
     <>
       <radialGradient
