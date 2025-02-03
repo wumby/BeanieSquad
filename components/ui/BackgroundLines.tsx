@@ -5,7 +5,7 @@ import React from "react";
 
 const BackgroundLines = () => {
   const { theme } = useTheme();
-  const color = theme === "dark" ? "var(--neutral-300)" : "#121212";
+  const color = theme === "light" ? '#121212' : 'var(--neutral-300)';
   return (
     <>
       <radialGradient
