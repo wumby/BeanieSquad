@@ -6,13 +6,13 @@ import { OrbitControls, useGLTF } from "@react-three/drei";
 import { useRef } from "react";
 
 function BasketballModel() {
-  const { nodes } = useGLTF("https://qt1ij3ealzquyi63.public.blob.vercel-storage.com/basketball-EJR4GQuceTBpmpsOfF2oR6ZbrHmFeh.glb", true); 
+  const { nodes } = useGLTF("/basketball.glb", true);
   const basketballRef = useRef(null);
   console.log(nodes);
   useFrame(() => {
     if (basketballRef.current) {
       //@ts-expect-error
-      basketballRef.current.rotation.y += 0.01; 
+      basketballRef.current.rotation.y += 0.005;
     }
   });
 

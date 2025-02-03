@@ -1,20 +1,38 @@
 import Basketball from "@/components/Basketball";
 import React from "react";
+import { TextGenerateEffect } from "@/components/ui/TextGenerate";
+import { BackgroundBeams } from "@/components/ui/Background";
 
 const Hero = () => {
   return (
-    <div className="w-full h-screen flex items-center flex-col overflow-x-hidden">
-      <div className="absolute inset-0 bg-background-light dark:bg-background-dark bg-opacity-50"></div>
+    <div className="w-full h-screen flex items-center justify-evenly overflow-x-hidden">
+      {/* <div className="absolute inset-0 bg-background-light dark:bg-background-dark bg-opacity-50"></div> */}
       {/* Content */}
-      <div className="flex justify-center flex-col w-fit h-[25vh] z-10 select-none">
-        <h1 className="flex justify-center text-7xl">Beanie Squad</h1>
-        <p className="mt-4 text-lg md:text-xl text-gray-300 w-fit">
-          The ultimate 2K basketball squad. Compete. Dominate. Win.
-        </p>
+      <div className="flex justify-center flex-col w-[50%] h-[25vh] z-10 select-none">
+        <div className="flex justify-center w-[100%]">
+          <h1>
+            <TextGenerateEffect
+              words={"Beanie Squad"}
+              classes="text-8xl text-orange-1"
+            />
+          </h1>
+        </div>
+        <div className="flex justify-center w-[100%]">
+          <h1>
+            <TextGenerateEffect
+              words={
+                "A top 2K team for the past ten years filled with the top hoopers from around the globe"
+              }
+              classes="text-4xl text-black dark:text-white"
+            />
+          </h1>
+        </div>
       </div>
-      <div className="overflow-x-visible w-[33vh] h-[50vh] z-20">
-        <Basketball />
+
+      <div className="overflow-x-visible w-[50%] h-[100vh] z-20">
+        <Basketball></Basketball>
       </div>
+      <BackgroundBeams />
     </div>
   );
 };
