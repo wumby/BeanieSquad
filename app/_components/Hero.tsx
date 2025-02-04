@@ -3,7 +3,8 @@ import React from "react";
 import { TextGenerateEffect } from "@/components/ui/TextGenerate";
 import { BackgroundBeams } from "@/components/ui/Background";
 import { headers } from "next/headers";
-
+import { ShimmerButton } from "@/components/ui/ShimmerButton";
+import BeanieStats from "./BeanieStats";
 
 const Hero = async () => {
   const userAgent = (await headers()).get("user-agent") || "";
@@ -12,13 +13,10 @@ const Hero = async () => {
     <div className="w-full h-screen flex items-center justify-evenly overflow-x-hidden">
       {/* <div className="absolute inset-0 bg-background-light dark:bg-background-dark bg-opacity-50"></div> */}
       {/* Content */}
-      <div className="flex justify-center flex-col w-[50%] h-[25vh] z-10 select-none">
+      <div className="flex justify-center flex-col w-[50%] h-[25vh] z-10 select-none mb-[10%]">
         <div className="flex justify-center w-[100%]">
-          <h1>
-            <TextGenerateEffect
-              words={"Beanie Squad"}
-              classes="text-8xl text-orange-1"
-            />
+          <h1 className=" text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl text-orange-1 font-bold pl-4">
+            Beanie Squad
           </h1>
         </div>
         <div className="flex justify-center w-[100%]">
@@ -27,17 +25,27 @@ const Hero = async () => {
               words={
                 "A top 2K team for the past ten years filled with the top hoopers from around the globe"
               }
-              classes="text-4xl text-black dark:text-white"
+              classes="sm:text-2xl lg:text-4xl text-black dark:text-white text-center pl-5"
             />
           </h1>
         </div>
+        <div className="flex justify-center mt-10">
+          <ShimmerButton className="shadow-2xl">
+            <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-orange-1 dark:to-slate-900/10 lg:text-lg">
+              See Our Team
+            </span>
+          </ShimmerButton>
+        </div>
+        <div>
+          <BeanieStats />
+        </div>
       </div>
 
-      <div className="overflow-x-visible w-[50%] h-[100vh] z-20">
-        <Basketball isMobile={isMobile}></Basketball>
+      <div className="overflow-x-visible w-[50%] lg:h-[90vh] z-20 md:h-[45vh] h-[30vh]">
+        <Basketball />
       </div>
+
       {!isMobile && <BackgroundBeams />}
-      
     </div>
   );
 };

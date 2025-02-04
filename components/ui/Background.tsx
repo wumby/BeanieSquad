@@ -69,7 +69,7 @@ export const BackgroundBeams = React.memo(
               </motion.linearGradient>
             ))}
 
-           <BackgroundLines />
+            <BackgroundLines />
           </defs>
         </svg>
       </div>
