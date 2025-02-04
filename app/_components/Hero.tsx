@@ -2,8 +2,12 @@ import Basketball from "@/components/Basketball";
 import React from "react";
 import { TextGenerateEffect } from "@/components/ui/TextGenerate";
 import { BackgroundBeams } from "@/components/ui/Background";
+import { headers } from "next/headers";
 
-const Hero = () => {
+
+const Hero = async () => {
+  const userAgent = (await headers()).get("user-agent") || "";
+  const isMobile = /Mobile|Android|iPhone/i.test(userAgent);
   return (
     <div className="w-full h-screen flex items-center justify-evenly overflow-x-hidden">
       {/* <div className="absolute inset-0 bg-background-light dark:bg-background-dark bg-opacity-50"></div> */}
@@ -30,9 +34,10 @@ const Hero = () => {
       </div>
 
       <div className="overflow-x-visible w-[50%] h-[100vh] z-20">
-        <Basketball></Basketball>
+        <Basketball isMobile={isMobile}></Basketball>
       </div>
-      <BackgroundBeams />
+      {!isMobile && <BackgroundBeams />}
+      
     </div>
   );
 };
