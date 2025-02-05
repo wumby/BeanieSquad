@@ -32,7 +32,7 @@ export function CardContent(props: CardContentProps) {
             }}
             className="py-4 flex justify-center flex-wrap z-20 w-full"
           >
-            <h1 className="w-full flex justify-center text-white font-bold text-3xl lg:text-5xl z-100">
+            <h1 className="w-full flex justify-center text-white font-bold text-3xl lg:text-4xl z-100">
               {props.player.name}
             </h1>
             <h2 className="text-white text-md lg:text-2xl text-left font-bold flex justify-center w-full mb-2">
