@@ -28,7 +28,7 @@ const Roster = () => {
           <div className="flex justify-evenly gap-10 flex-wrap w-full mt-11">
             {players.map((p) => {
               return (
-                <div className="w-[20%]" key={p.id}>
+                <div className=" w-[50%] sm:w-[33%] lg:w-[20%]" key={p.id}>
                   <PlayerCard player={p}></PlayerCard>
                 </div>
               );

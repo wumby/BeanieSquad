@@ -11,8 +11,12 @@ const Hero = async () => {
   const isMobile = /Mobile|Android|iPhone/i.test(userAgent);
   return (
     <div className="w-full h-screen flex items-center justify-evenly overflow-x-hidden">
-      {/* <div className="absolute inset-0 bg-background-light dark:bg-background-dark bg-opacity-50"></div> */}
-      {/* Content */}
+      {isMobile && (
+        <div className="h-screen w-full  bg-grid-orange-1/[0.08] flex items-center justify-center absolute top-0 left-0 z-10">
+          <div className="absolute pointer-events-none inset-0 flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+        </div>
+      )}
+      
       <div className="flex justify-center flex-col w-[50%] h-[25vh] z-10 select-none mb-[10%]">
         <div className="flex justify-center w-[100%]">
           <h1 className=" text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl text-orange-1 font-bold pl-4">
