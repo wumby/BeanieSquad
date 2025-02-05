@@ -26,7 +26,7 @@ const MobileMenu = () => {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="md:hidden">
+      <SheetContent side="left" className="md:hidden bg-background-light dark:bg-background-dark z-[300]">
         <div className="grid gap-4 p-4">
           <Link
             href="/"
@@ -55,6 +55,13 @@ const MobileMenu = () => {
             onClick={closeSheet}
           >
             Apparel
+          </Link>
+          <Link
+            href="/media"
+            className={`${styles["links-small"]} dark:text-white dark:hover:text-gray-400`}
+            onClick={closeSheet}
+          >
+            Media
           </Link>
         </div>
       </SheetContent>
