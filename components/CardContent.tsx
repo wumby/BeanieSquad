@@ -4,18 +4,27 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Lens } from "./ui/Lens";
-import { Player } from "@/types";
+import { Player, Rarity } from "@/types";
 import { CardBorder } from "./ui/CardBorder";
 interface CardContentProps {
   player: Player;
 }
 export function CardContent(props: CardContentProps) {
   const [hovering, setHovering] = useState(false);
+  const rarityColors: Record<Rarity, [string, string]> = {
+    [Rarity.LEGEND]: ["#ff0101", "#a70e0e"],
+    [Rarity.HOF]: ["#a100c8", "#c904f9"],
+    [Rarity.GOLD]: ["#ffd700", "#b8860b"],
+    [Rarity.SILVER]: ["#c0c0c0", "#8f8f8f"],
+    [Rarity.BRONZE]: ["#8B5A2B", "#704214"],
+  };
+
+  const colors = rarityColors[props.player.rarity] || ["#121212", "#fff"];
   return (
     <div>
       <div className="w-full relative rounded-3xl overflow-hidden mx-auto bg-gradient-to-r from-[#1D2235] to-[#121318] p-4">
-        <Rays />
-        <Beams />
+        <Rays colors={colors} />
+        <Beams colors={colors} />
         <div className="flex justify-center flex-wrap z-10">
           <Lens hovering={hovering} setHovering={setHovering}>
             <Image
@@ -32,7 +41,7 @@ export function CardContent(props: CardContentProps) {
             }}
             className="py-4 flex justify-center flex-wrap z-20 w-full"
           >
-            <h1 className="w-full flex justify-center text-white font-bold text-3xl lg:text-4xl z-100">
+            <h1 className="w-full flex justify-center text-white font-bold text-2xl lg:text-4xl z-100">
               {props.player.name}
             </h1>
             <h2 className="text-white text-md lg:text-2xl text-left font-bold flex justify-center w-full mb-2">
@@ -40,11 +49,11 @@ export function CardContent(props: CardContentProps) {
               {props.player.positions.map((p, i) => {
                 const slash = i == props.player.positions.length - 1 ? "" : "/";
                 return (
-                  <>
+                  <div key={i}>
                     {" "}
                     {p}
                     {slash}
-                  </>
+                  </div>
                 );
               })}
             </h2>
@@ -65,7 +74,7 @@ export function CardContent(props: CardContentProps) {
   );
 }
 
-const Beams = () => {
+const Beams = ({ colors }: { colors: string[] }) => {
   return (
     <svg
       width="380"
@@ -76,13 +85,13 @@ const Beams = () => {
       className="absolute top-0 left-1/2 -translate-x-1/2 w-full pointer-events-none"
     >
       <g filter="url(#filter0_f_120_7473)">
-        <circle cx="34" cy="52" r="114" fill="#6925E7" />
+        <circle cx="34" cy="52" r="114" fill={colors[0]} />
       </g>
       <g filter="url(#filter1_f_120_7473)">
-        <circle cx="332" cy="24" r="102" fill="#8A4BFF" />
+        <circle cx="332" cy="24" r="102" fill={colors[0]} />
       </g>
       <g filter="url(#filter2_f_120_7473)">
-        <circle cx="191" cy="53" r="102" fill="#802FE3" />
+        <circle cx="191" cy="53" r="102" fill={colors[1]} />
       </g>
       <defs>
         <filter
@@ -153,13 +162,19 @@ const Beams = () => {
   );
 };
 
-const Rays = ({ className }: { className?: string }) => {
+const Rays = ({
+  className,
+  colors,
+}: {
+  className?: string;
+  colors: string[];
+}) => {
   return (
     <svg
       width="380"
       height="397"
       viewBox="0 0 380 397"
-      fill="none"
+      fill={colors[1]}
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
         "absolute left-0 top-0  pointer-events-none z-[1]",
@@ -169,7 +184,7 @@ const Rays = ({ className }: { className?: string }) => {
       <g filter="url(#filter0_f_120_7480)">
         <path
           d="M-37.4202 -76.0163L-18.6447 -90.7295L242.792 162.228L207.51 182.074L-37.4202 -76.0163Z"
-          fill="url(#paint0_linear_120_7480)"
+          fill={colors[0]}
         />
       </g>
       <g
@@ -179,7 +194,7 @@ const Rays = ({ className }: { className?: string }) => {
       >
         <path
           d="M-109.54 -36.9027L-84.2903 -58.0902L178.786 193.228L132.846 223.731L-109.54 -36.9027Z"
-          fill="url(#paint1_linear_120_7480)"
+          fill={colors[1]}
         />
       </g>
       <g
@@ -189,7 +204,7 @@ const Rays = ({ className }: { className?: string }) => {
       >
         <path
           d="M-100.647 -65.795L-69.7261 -92.654L194.786 157.229L139.51 197.068L-100.647 -65.795Z"
-          fill="url(#paint2_linear_120_7480)"
+          fill={colors[1]}
         />
       </g>
       <g
@@ -199,7 +214,7 @@ const Rays = ({ className }: { className?: string }) => {
       >
         <path
           d="M163.917 -89.0982C173.189 -72.1354 80.9618 2.11525 34.7334 30.1553C-11.495 58.1954 -106.505 97.514 -115.777 80.5512C-125.048 63.5885 -45.0708 -3.23233 1.15763 -31.2724C47.386 -59.3124 154.645 -106.061 163.917 -89.0982Z"
-          fill="#8A50FF"
+          fill={colors[0]}
         />
       </g>
       <g
@@ -416,8 +431,8 @@ const Rays = ({ className }: { className?: string }) => {
           y2="351.523"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.214779" stopColor="#AF53FF" />
-          <stop offset="0.781583" stopColor="#B253FF" stopOpacity="0" />
+          <stop offset="0.214779" stopColor={colors[0]} />
+          <stop offset="0.781583" stopColor={colors[1]} stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_120_7480"
@@ -427,8 +442,8 @@ const Rays = ({ className }: { className?: string }) => {
           y2="379.765"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.214779" stopColor="#AF53FF" />
-          <stop offset="0.781583" stopColor="#9E53FF" stopOpacity="0" />
+          <stop offset="0.214779" stopColor={colors[1]} />
+          <stop offset="0.781583" stopColor={colors[0]} stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_120_7480"
@@ -438,8 +453,8 @@ const Rays = ({ className }: { className?: string }) => {
           y2="342.58"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.214779" stopColor="#9D53FF" />
-          <stop offset="0.781583" stopColor="#A953FF" stopOpacity="0" />
+          <stop offset="0.214779" stopColor={colors[0]} />
+          <stop offset="0.781583" stopColor={colors[1]} stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_120_7480"
@@ -449,8 +464,8 @@ const Rays = ({ className }: { className?: string }) => {
           y2="187.221"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#AF81FF" />
-          <stop offset="1" stopColor="#C081FF" stopOpacity="0" />
+          <stop stopColor={colors[1]} />
+          <stop offset="1" stopColor={colors[0]} stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_120_7480"
@@ -460,8 +475,8 @@ const Rays = ({ className }: { className?: string }) => {
           y2="133.065"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#AF81FF" />
-          <stop offset="1" stopColor="#C081FF" stopOpacity="0" />
+          <stop stopColor={colors[1]} />
+          <stop offset="1" stopColor={colors[0]} stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_120_7480"
@@ -471,8 +486,8 @@ const Rays = ({ className }: { className?: string }) => {
           y2="174.189"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#B981FF" />
-          <stop offset="1" stopColor="#CF81FF" stopOpacity="0" />
+          <stop stopColor={colors[1]} />
+          <stop offset="1" stopColor={colors[1]} stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_120_7480"
@@ -482,8 +497,8 @@ const Rays = ({ className }: { className?: string }) => {
           y2="184.983"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#A981FF" />
-          <stop offset="1" stopColor="#CB81FF" stopOpacity="0" />
+          <stop stopColor={colors[0]} />
+          <stop offset="1" stopColor={colors[1]} stopOpacity="0" />
         </linearGradient>
       </defs>
     </svg>

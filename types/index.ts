@@ -34,3 +34,8 @@ export type Player = {
   height: string;
   coach: Coach;
 };
+
+export interface Highlight {
+  url: string;
+  heading: string;
+}

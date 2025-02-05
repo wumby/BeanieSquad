@@ -46,7 +46,7 @@ export const CardBorder = ({
             : undefined
         }
         style={{
-          backgroundImage: `radial-gradient(circle farthest-side at 0% 100%, ${colors[0]}, transparent), 
+          backgroundImage: ` radial-gradient(circle farthest-side at 0% 100%, ${colors[0]}, transparent), 
                             radial-gradient(circle farthest-side at 100% 0%, ${colors[1]}, transparent), 
                             radial-gradient(circle farthest-side at 100% 100%, ${colors[0]}, transparent), 
                             radial-gradient(circle farthest-side at 0% 0%, ${colors[1]}, #141316)`,

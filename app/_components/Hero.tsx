@@ -16,7 +16,7 @@ const Hero = async () => {
           <div className="absolute pointer-events-none inset-0 flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
         </div>
       )}
-      
+
       <div className="flex justify-center flex-col w-[50%] h-[25vh] z-10 select-none mb-[10%]">
         <div className="flex justify-center w-[100%]">
           <h1 className=" text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl text-orange-1 font-bold pl-4">
