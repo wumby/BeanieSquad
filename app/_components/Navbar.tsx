@@ -6,12 +6,13 @@ import Image from "next/image";
 import ThemeSwitcher from "./ThemeSwitcher";
 import styles from "./Navbar.module.css";
 import SearchCommand from "@/components/SearchBar";
+import { FaAlignJustify } from "react-icons/fa";
 
 const Navbar = () => {
   return (
     <header className="sticky top-5 z-50 w-full bg-background-dark bg-opacity-0">
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2" prefetch={false}>
+        <Link href="/" className="flex items-center gap-2">
           <Image src={"/logo.png"} alt={""} width={75} height={75}></Image>
           <span className="text-lg md:text-3xl text-black dark:text-white">
             Beanie Squad
@@ -37,7 +38,7 @@ const Navbar = () => {
             Roster
           </Link>
           <Link
-            href="#"
+            href="/apparel"
             className={`${styles["links"]} dark:text-white dark:hover:text-gray-400`}
           >
             Apparel
@@ -53,35 +54,35 @@ const Navbar = () => {
                 size="icon"
                 className="rounded-full md:hidden"
               >
-                {/* <MenuIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" /> */}
+                <FaAlignJustify />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="md:hidden">
               <div className="grid gap-4 p-4">
                 <Link
-                  href="#"
-                  className={`${styles["links-small"]} dark:text-gray-400 dark:hover:text-gray-50`}
+                  href="/"
+                  className={`${styles["links-small"]} dark:text-white dark:hover:text-gray-400`}
                 >
                   Home
                 </Link>
                 <Link
-                  href="#"
-                  className={`${styles["links-small"]} dark:text-gray-400 dark:hover:text-gray-50`}
+                  href="/lineups"
+                  className={`${styles["links-small"]} dark:text-white dark:hover:text-gray-400`}
                 >
-                  About
+                  Lineups
                 </Link>
                 <Link
-                  href="#"
-                  className={`${styles["links-small"]} dark:text-gray-400 dark:hover:text-gray-50`}
+                  href="/roster"
+                  className={`${styles["links-small"]} dark:text-white dark:hover:text-gray-400`}
                 >
-                  Services
+                  Roster
                 </Link>
                 <Link
-                  href="#"
-                  className={`${styles["links-small"]} dark:text-gray-400 dark:hover:text-gray-50`}
+                  href="/apparel"
+                  className={`${styles["links-small"]} dark:text-white dark:hover:text-gray-400`}
                 >
-                  Contact
+                  Apparel
                 </Link>
               </div>
             </SheetContent>

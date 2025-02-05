@@ -14,11 +14,16 @@ export default {
   theme: {
     extend: {
       animation: {
+        pulse: "pulse var(--duration) ease-out infinite",
         "shimmer-slide":
           "shimmer-slide var(--speed) ease-in-out infinite alternate",
         "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
       },
       keyframes: {
+        pulse: {
+          "0%, 100%": { boxShadow: "0 0 0 0 var(--pulse-color)" },
+          "50%": { boxShadow: "0 0 0 8px var(--pulse-color)" },
+        },
         "spin-around": {
           "0%": {
             transform: "translateZ(0) rotate(0)",

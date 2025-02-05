@@ -2,8 +2,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { paths, path } from "@/data";
 import BackgroundLines from "./BackgroundLines";
+import { path, paths } from "@/data";
 
 export const BackgroundBeams = React.memo(
   ({ className }: { className?: string }) => {

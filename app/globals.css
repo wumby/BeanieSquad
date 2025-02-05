@@ -2,14 +2,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevents extra scrolling */
+}
 body {
   font-family: "Barlow Condensed", sans-serif;
+  background-color: var(--background);
 }
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: #fff;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -37,7 +44,7 @@ body {
     --lines: "#121212";
   }
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: #121212;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
