@@ -5,6 +5,7 @@ import { BackgroundBeams } from "@/components/ui/Background";
 import { headers } from "next/headers";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import BeanieStats from "./BeanieStats";
+import Link from "next/link";
 
 const Hero = async () => {
   const userAgent = (await headers()).get("user-agent") || "";
@@ -34,11 +35,13 @@ const Hero = async () => {
           </h1>
         </div>
         <div className="flex justify-center mt-10">
-          <ShimmerButton className="shadow-2xl w-[15vh] sm:w-[20vh]">
-            <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-orange-1 dark:to-slate-900/10 lg:text-lg">
-              See Our Team
-            </span>
-          </ShimmerButton>
+          <Link href="/roster">
+            <ShimmerButton className="shadow-2xl w-[15vh] sm:w-[20vh]">
+              <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-orange-1 dark:to-slate-900/10 lg:text-lg">
+                See Our Team
+              </span>
+            </ShimmerButton>
+          </Link>
         </div>
         <div>
           <BeanieStats />
