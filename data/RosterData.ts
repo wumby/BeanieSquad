@@ -176,7 +176,7 @@ export const roster: Player[] = [
     name: "Reginald I.",
     positions: [Position.PF],
     rarity: Rarity.HOF,
-    archetype: "Shot BLocker",
+    archetype: "Shot Blocker",
     img: "/reginaldi.png",
     height: `6'9`,
     coach: Coach.MAX,

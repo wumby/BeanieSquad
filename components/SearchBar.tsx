@@ -63,6 +63,14 @@ export default function SearchCommand() {
             Apparel
           </CommandItem>
           </Link>
+          <Link href={'/media'}> <CommandItem
+            onSelect={() => {
+              setOpen(false);
+            }}
+          >
+            Media
+          </CommandItem>
+          </Link>
         </CommandList>
       </CommandDialog>
     </>
