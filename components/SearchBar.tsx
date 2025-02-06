@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import Link from "next/link";
 
 export default function SearchCommand() {
   const [open, setOpen] = useState(false);
@@ -38,15 +39,30 @@ export default function SearchCommand() {
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput />
         <CommandList>
-          <CommandItem
+          <Link href={'/lineups'}> <CommandItem
             onSelect={() => {
               setOpen(false);
             }}
           >
             Lineups
           </CommandItem>
-          <CommandItem onSelect={() => setOpen(false)}>Roster</CommandItem>
-          <CommandItem onSelect={() => setOpen(false)}>Apparel</CommandItem>
+          </Link>
+          <Link href={'/roster'}> <CommandItem
+            onSelect={() => {
+              setOpen(false);
+            }}
+          >
+            Roster
+          </CommandItem>
+          </Link>
+          <Link href={'/apparel'}> <CommandItem
+            onSelect={() => {
+              setOpen(false);
+            }}
+          >
+            Apparel
+          </CommandItem>
+          </Link>
         </CommandList>
       </CommandDialog>
     </>

@@ -134,8 +134,8 @@ const Lineups = ({ players }: { players: Player[] }) => {
         <h1 className="text-orange-1 text-6xl lg:text-8xl">Lineups</h1>
       </div>
       <div className="flex flex-col lg:flex-row-reverse items-center lg:items-start lg:justify-between w-full px-4 lg:px-10">
-        <div className="flex flex-col lg:flex-row items-center lg:items-end lg:space-x-6 w-full justify-center">
-          <div className="mb-4 lg:mb-0 w-44">
+        <div className="flex flex-row items-center lg:items-end lg:space-x-6 w-full justify-center flex-wrap">
+          <div className="mb-4 lg:mb-0 w-[50%] lg:w-44 ">
             <h2 className="text-lg font-semibold mb-2">Lineup Size:</h2>
             <DropdownMenu>
               <DropdownMenuTrigger className="w-44 flex justify-between items-center border border-gray-300 rounded-md px-3 py-2 text-lg">
@@ -157,7 +157,7 @@ const Lineups = ({ players }: { players: Player[] }) => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="mb-4 lg:mb-0">
+          <div className="mb-4 lg:mb-0 w-[50%] lg:w-44">
             <h2 className="text-lg font-semibold mb-2">Rarities:</h2>
             <DropdownMenu>
               <DropdownMenuTrigger className="w-44 border border-gray-300 rounded-md px-3 py-2 text-lg text-left flex justify-between items-center">
@@ -187,7 +187,7 @@ const Lineups = ({ players }: { players: Player[] }) => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="mb-4 lg:mb-0">
+          <div className="mb-4 lg:mb-0 w-[50%] lg:w-44">
             <h2 className="text-lg font-semibold mb-2">Coaches:</h2>
             <DropdownMenu>
               <DropdownMenuTrigger className="w-44 border border-gray-300 rounded-md px-3 py-2 text-lg text-left flex justify-between items-center">
@@ -223,7 +223,7 @@ const Lineups = ({ players }: { players: Player[] }) => {
           </div>
           
 
-          <div className="flex justify-center items-end">
+          <div className="flex justify-start lg:justify-center items-end w-[50%] lg:w-44">
             <ShimmerButton
               onClick={generateLineup}
               className="px-6 py-2 text-xl !text-white"

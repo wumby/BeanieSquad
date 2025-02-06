@@ -274,7 +274,7 @@ export const roster: Player[] = [
   {
     id: 28,
     name: "Tucker",
-    positions: [Position.SG],
+    positions: [Position.SG, Position.SF],
     rarity: Rarity.HOF,
     archetype: "Sharpshooter",
     img: "/tucker.png",
@@ -494,7 +494,7 @@ export const roster: Player[] = [
   {
     id: 50,
     name: "Gus",
-    positions: [Position.SG],
+    positions: [Position.SG, Position.SF],
     rarity: Rarity.GOLD,
     archetype: "Shot Creator",
     img: "/gus.png",
