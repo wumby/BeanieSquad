@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Player, Position, Coach } from "@/types";
+import { Player, Position, Coach, Rarity } from "@/types";
 import PlayerCard from "@/components/PlayerCard";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -16,50 +16,54 @@ import { ShimmerButton } from "@/components/ui/ShimmerButton";
 const Lineups = ({ players }: { players: Player[] }) => {
   const [lineupSize, setLineupSize] = useState<number>(5);
   const [selectedCoaches, setSelectedCoaches] = useState<Coach[]>([]);
+  const [selectedRarities, setSelectedRarities] = useState<Rarity[]>(Object.values(Rarity));
   const [lineup, setLineup] = useState<Player[]>([]);
 
   const MAX_COACH_SELECTION = lineupSize;
+
   const generateLineup = () => {
     for (let attempt = 0; attempt < 20; attempt++) {
       const shuffledPlayers = [...players].sort(() => Math.random() - 0.5);
       const usedCoaches = new Set<string>();
       const selectedPlayers: Player[] = new Array(lineupSize).fill(null);
-  
+
       // Define position slots
       const positionSlots =
         lineupSize === 3
           ? [Position.PG, [Position.SG, Position.SF], [Position.PF, Position.C]]
           : [Position.PG, Position.SG, Position.SF, Position.PF, Position.C];
-  
+
       // Shuffle positions to vary selection order
       const shuffledPositions = [...positionSlots].sort(() => Math.random() - 0.5);
-  
+
       for (let i = 0; i < shuffledPositions.length; i++) {
         const position = shuffledPositions[i];
         const isGrouped = Array.isArray(position);
-  
+
         // Filter players that:
         // - Have a coach from selectedCoaches
         // - Fit the position criteria
         // - Have a unique coach
         // - Haven't already been selected
+        // - Have a rarity from selectedRarities
         const availablePlayers = shuffledPlayers.filter(
           (p) =>
             selectedCoaches.includes(p.coach) && // Only allow selected coaches
+            selectedRarities.includes(p.rarity) && // Only allow selected rarities
             (isGrouped
               ? position.some((pos) => p.positions.includes(pos))
               : p.positions.includes(position)) &&
             !usedCoaches.has(p.coach) && // Enforce unique coaches
             !selectedPlayers.includes(p) // Avoid duplicate players
         );
-  
+
         if (availablePlayers.length > 0) {
           const player = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
           selectedPlayers[i] = player; // Place player in the correct slot
           usedCoaches.add(player.coach); // Mark coach as used
         }
       }
-  
+
       // Check if the lineup is complete
       if (selectedPlayers.every((p) => p !== null)) {
         // **Sort by PG → SG → SF → PF → C before setting state**
@@ -69,19 +73,20 @@ const Lineups = ({ players }: { players: Player[] }) => {
           const posB = Array.isArray(b.positions) ? b.positions[0] : b.positions;
           return positionOrder.indexOf(posA) - positionOrder.indexOf(posB);
         });
-  
+
         setLineup(finalLineup as Player[]);
         return;
       }
     }
-  
+
     // **Fallback in case no valid lineup was found**
     const backupLineup: Player[] = [];
     const usedCoaches = new Set<string>();
-  
+
     for (const player of players) {
       if (
         selectedCoaches.includes(player.coach) && // Ensure only selected coaches
+        selectedRarities.includes(player.rarity) && // Ensure only selected rarities
         !usedCoaches.has(player.coach) && // Unique coaches
         backupLineup.length < lineupSize
       ) {
@@ -90,7 +95,7 @@ const Lineups = ({ players }: { players: Player[] }) => {
       }
       if (backupLineup.length === lineupSize) break;
     }
-  
+
     // **Ensure the fallback lineup is also sorted**
     const finalBackupLineup = backupLineup.sort((a, b) => {
       const positionOrder = [Position.PG, Position.SG, Position.SF, Position.PF, Position.C];
@@ -98,12 +103,9 @@ const Lineups = ({ players }: { players: Player[] }) => {
       const posB = Array.isArray(b.positions) ? b.positions[0] : b.positions;
       return positionOrder.indexOf(posA) - positionOrder.indexOf(posB);
     });
-  
+
     setLineup(finalBackupLineup);
   };
-  
-  
-  
 
   const toggleCoachSelection = (coach: Coach) => {
     setSelectedCoaches((prev) => {
@@ -114,6 +116,15 @@ const Lineups = ({ players }: { players: Player[] }) => {
         return [...prev, coach];
       }
       return prev;
+    });
+  };
+
+  const toggleRaritySelection = (rarity: Rarity) => {
+    setSelectedRarities((prev) => {
+      if (prev.includes(rarity)) {
+        return prev.filter((r) => r !== rarity);
+      }
+      return [...prev, rarity];
     });
   };
 
@@ -143,6 +154,36 @@ const Lineups = ({ players }: { players: Player[] }) => {
                     {size} Players
                   </DropdownMenuItem>
                 ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div className="mb-4 lg:mb-0">
+            <h2 className="text-lg font-semibold mb-2">Rarities:</h2>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="w-44 border border-gray-300 rounded-md px-3 py-2 text-lg text-left flex justify-between items-center">
+                <span>
+                  {selectedRarities.length > 0
+                    ? `${selectedRarities.length} Selected`
+                    : "Select Rarities"}
+                </span>
+                <FaChevronDown className="w-5 h-5" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48 p-2">
+                {Object.values(Rarity).map((rarity) => (
+                  <label
+                    key={rarity}
+                    className="flex items-center space-x-2 cursor-pointer py-1"
+                  >
+                    <Checkbox
+                      checked={selectedRarities.includes(rarity)}
+                      onCheckedChange={() => toggleRaritySelection(rarity)}
+                    />
+                    <span>{rarity}</span>
+                  </label>
+                ))}
+                <p className="text-gray-500 text-sm mt-2">
+                  {selectedRarities.length} / {Object.values(Rarity).length} selected
+                </p>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -180,12 +221,13 @@ const Lineups = ({ players }: { players: Player[] }) => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+          
 
           <div className="flex justify-center items-end">
             <ShimmerButton
               onClick={generateLineup}
               className="px-6 py-2 text-xl !text-white"
-              disabled={selectedCoaches.length !== MAX_COACH_SELECTION}
+              disabled={selectedCoaches.length !== MAX_COACH_SELECTION || selectedRarities.length === 0}
             >
               Generate Lineup
             </ShimmerButton>
