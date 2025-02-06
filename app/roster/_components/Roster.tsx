@@ -78,7 +78,7 @@ const Roster = ({pageSize} :{pageSize:number}) => {
           <div className="flex flex-col items-center mt-11 mb-[30vh]">
             {/* ✅ Pagination */}
             <Pagination>
-              <PaginationContent className="flex space-x-2 lg:space-x-4">
+              <PaginationContent className="flex space-x-0 lg:space-x-4">
                 <PaginationItem>
                   {page > 1 ? (
                     <PaginationPrevious
