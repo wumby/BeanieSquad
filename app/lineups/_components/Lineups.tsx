@@ -20,40 +20,90 @@ const Lineups = ({ players }: { players: Player[] }) => {
 
   const MAX_COACH_SELECTION = lineupSize;
   const generateLineup = () => {
-    for (let i = 0; i < 20; i++) {
+    for (let attempt = 0; attempt < 20; attempt++) {
       const shuffledPlayers = [...players].sort(() => Math.random() - 0.5);
-      const selectedPlayers: Player[] = [];
       const usedCoaches = new Set<string>();
-
-      const positionGroups =
+      const selectedPlayers: Player[] = new Array(lineupSize).fill(null);
+  
+      // Define position slots
+      const positionSlots =
         lineupSize === 3
           ? [Position.PG, [Position.SG, Position.SF], [Position.PF, Position.C]]
-          : Object.values(Position);
-
-      for (const position of positionGroups) {
+          : [Position.PG, Position.SG, Position.SF, Position.PF, Position.C];
+  
+      // Shuffle positions to vary selection order
+      const shuffledPositions = [...positionSlots].sort(() => Math.random() - 0.5);
+  
+      for (let i = 0; i < shuffledPositions.length; i++) {
+        const position = shuffledPositions[i];
         const isGrouped = Array.isArray(position);
-        const player = shuffledPlayers.find(
+  
+        // Filter players that:
+        // - Have a coach from selectedCoaches
+        // - Fit the position criteria
+        // - Have a unique coach
+        // - Haven't already been selected
+        const availablePlayers = shuffledPlayers.filter(
           (p) =>
+            selectedCoaches.includes(p.coach) && // Only allow selected coaches
             (isGrouped
               ? position.some((pos) => p.positions.includes(pos))
               : p.positions.includes(position)) &&
-            selectedCoaches.includes(p.coach) &&
-            !usedCoaches.has(p.coach),
+            !usedCoaches.has(p.coach) && // Enforce unique coaches
+            !selectedPlayers.includes(p) // Avoid duplicate players
         );
-
-        if (player) {
-          selectedPlayers.push(player);
-          usedCoaches.add(player.coach);
+  
+        if (availablePlayers.length > 0) {
+          const player = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
+          selectedPlayers[i] = player; // Place player in the correct slot
+          usedCoaches.add(player.coach); // Mark coach as used
         }
       }
-      if (selectedPlayers.length === lineupSize) {
-        setLineup(selectedPlayers);
+  
+      // Check if the lineup is complete
+      if (selectedPlayers.every((p) => p !== null)) {
+        // **Sort by PG → SG → SF → PF → C before setting state**
+        const finalLineup = selectedPlayers.sort((a, b) => {
+          const positionOrder = [Position.PG, Position.SG, Position.SF, Position.PF, Position.C];
+          const posA = Array.isArray(a.positions) ? a.positions[0] : a.positions;
+          const posB = Array.isArray(b.positions) ? b.positions[0] : b.positions;
+          return positionOrder.indexOf(posA) - positionOrder.indexOf(posB);
+        });
+  
+        setLineup(finalLineup as Player[]);
         return;
       }
     }
-
-    setLineup([players[0]]);
+  
+    // **Fallback in case no valid lineup was found**
+    const backupLineup: Player[] = [];
+    const usedCoaches = new Set<string>();
+  
+    for (const player of players) {
+      if (
+        selectedCoaches.includes(player.coach) && // Ensure only selected coaches
+        !usedCoaches.has(player.coach) && // Unique coaches
+        backupLineup.length < lineupSize
+      ) {
+        backupLineup.push(player);
+        usedCoaches.add(player.coach);
+      }
+      if (backupLineup.length === lineupSize) break;
+    }
+  
+    // **Ensure the fallback lineup is also sorted**
+    const finalBackupLineup = backupLineup.sort((a, b) => {
+      const positionOrder = [Position.PG, Position.SG, Position.SF, Position.PF, Position.C];
+      const posA = Array.isArray(a.positions) ? a.positions[0] : a.positions;
+      const posB = Array.isArray(b.positions) ? b.positions[0] : b.positions;
+      return positionOrder.indexOf(posA) - positionOrder.indexOf(posB);
+    });
+  
+    setLineup(finalBackupLineup);
   };
+  
+  
+  
 
   const toggleCoachSelection = (coach: Coach) => {
     setSelectedCoaches((prev) => {
