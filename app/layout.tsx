@@ -18,6 +18,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Beanie Squad",
   description: "Beanie Squads Website",
+  icons: {
+    icon: "/favicon.ico", 
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
