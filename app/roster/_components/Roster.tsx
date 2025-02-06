@@ -14,9 +14,8 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination";
 
-const PAGE_SIZE = 16;
 
-const Roster = () => {
+const Roster = ({pageSize} :{pageSize:number}) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -33,7 +32,7 @@ const Roster = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       const res = await fetch(
-        `/api/roster?page=${page}&pageSize=${PAGE_SIZE}&search=${encodeURIComponent(search)}&rarity=${rarity}&coach=${coach}&sortBy=${sortBy}`,
+        `/api/roster?page=${page}&pageSize=${pageSize}&search=${encodeURIComponent(search)}&rarity=${rarity}&coach=${coach}&sortBy=${sortBy}`,
       );
       const data = await res.json();
       setPlayers(data.players);
@@ -42,7 +41,7 @@ const Roster = () => {
     };
 
     fetchPlayers();
-  }, [page, search, rarity, coach, sortBy]);
+  }, [page, search, rarity, coach, sortBy,pageSize]);
 
   const updateQueryParams = (key: string, value: string, resetPage = false) => {
     const params = new URLSearchParams(searchParams.toString());
