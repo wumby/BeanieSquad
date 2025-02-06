@@ -347,8 +347,8 @@ export const roster: Player[] = [
     positions: [Position.SG, Position.SF],
     rarity: Rarity.GOLD,
     archetype: "Float King",
-    img: "/wendy.png",
-    height: `6'7`,
+    img: "/edna.png",
+    height: `6'4`,
     coach: Coach.NOAH,
   },
   {
