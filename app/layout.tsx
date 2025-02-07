@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from "../components/Navbar";
 import Head from "next/head";
-
+import { Analytics } from "@vercel/analytics/react"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -37,6 +37,7 @@ export default function RootLayout({
       <meta name="description" content="Beanie Squads Website"/>
       <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
+      <Analytics />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
