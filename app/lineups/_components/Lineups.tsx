@@ -20,53 +20,47 @@ const Lineups = ({ players }: { players: Player[] }) => {
   const [lineup, setLineup] = useState<Player[]>([]);
 
   const MAX_COACH_SELECTION = lineupSize;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const positionArrays: Record<number, any> = {
+    1: [[Position.PG, Position.SG, Position.SF, Position.PF, Position.C]],
+    2: [[Position.PG, Position.SG,],[Position.PF, Position.C]],
+    3: [Position.PG, [Position.SG, Position.SF], [Position.PF, Position.C]],
+    4: [Position.PG, [Position.SG, Position.SF], [Position.SF, Position.PF], Position.C],
+    5:  [Position.PG, Position.SG, Position.SF, Position.PF, Position.C],
+  };
 
   const generateLineup = () => {
     for (let attempt = 0; attempt < 20; attempt++) {
       const shuffledPlayers = [...players].sort(() => Math.random() - 0.5);
       const usedCoaches = new Set<string>();
       const selectedPlayers: Player[] = new Array(lineupSize).fill(null);
-
-      // Define position slots
       const positionSlots =
-        lineupSize === 3
-          ? [Position.PG, [Position.SG, Position.SF], [Position.PF, Position.C]]
-          : [Position.PG, Position.SG, Position.SF, Position.PF, Position.C];
+      positionArrays[lineupSize] || [];
 
-      // Shuffle positions to vary selection order
       const shuffledPositions = [...positionSlots].sort(() => Math.random() - 0.5);
 
       for (let i = 0; i < shuffledPositions.length; i++) {
         const position = shuffledPositions[i];
         const isGrouped = Array.isArray(position);
-
-        // Filter players that:
-        // - Have a coach from selectedCoaches
-        // - Fit the position criteria
-        // - Have a unique coach
-        // - Haven't already been selected
-        // - Have a rarity from selectedRarities
         const availablePlayers = shuffledPlayers.filter(
           (p) =>
-            selectedCoaches.includes(p.coach) && // Only allow selected coaches
-            selectedRarities.includes(p.rarity) && // Only allow selected rarities
+            selectedCoaches.includes(p.coach) && 
+            selectedRarities.includes(p.rarity) && 
             (isGrouped
               ? position.some((pos) => p.positions.includes(pos))
               : p.positions.includes(position)) &&
-            !usedCoaches.has(p.coach) && // Enforce unique coaches
-            !selectedPlayers.includes(p) // Avoid duplicate players
+            !usedCoaches.has(p.coach) && 
+            !selectedPlayers.includes(p) 
         );
 
         if (availablePlayers.length > 0) {
           const player = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
-          selectedPlayers[i] = player; // Place player in the correct slot
-          usedCoaches.add(player.coach); // Mark coach as used
+          selectedPlayers[i] = player; 
+          usedCoaches.add(player.coach); 
         }
       }
 
-      // Check if the lineup is complete
       if (selectedPlayers.every((p) => p !== null)) {
-        // **Sort by PG → SG → SF → PF → C before setting state**
         const finalLineup = selectedPlayers.sort((a, b) => {
           const positionOrder = [Position.PG, Position.SG, Position.SF, Position.PF, Position.C];
           const posA = Array.isArray(a.positions) ? a.positions[0] : a.positions;
@@ -79,15 +73,14 @@ const Lineups = ({ players }: { players: Player[] }) => {
       }
     }
 
-    // **Fallback in case no valid lineup was found**
     const backupLineup: Player[] = [];
     const usedCoaches = new Set<string>();
 
     for (const player of players) {
       if (
-        selectedCoaches.includes(player.coach) && // Ensure only selected coaches
-        selectedRarities.includes(player.rarity) && // Ensure only selected rarities
-        !usedCoaches.has(player.coach) && // Unique coaches
+        selectedCoaches.includes(player.coach) && 
+        selectedRarities.includes(player.rarity) && 
+        !usedCoaches.has(player.coach) && 
         backupLineup.length < lineupSize
       ) {
         backupLineup.push(player);
@@ -95,8 +88,6 @@ const Lineups = ({ players }: { players: Player[] }) => {
       }
       if (backupLineup.length === lineupSize) break;
     }
-
-    // **Ensure the fallback lineup is also sorted**
     const finalBackupLineup = backupLineup.sort((a, b) => {
       const positionOrder = [Position.PG, Position.SG, Position.SF, Position.PF, Position.C];
       const posA = Array.isArray(a.positions) ? a.positions[0] : a.positions;
@@ -143,7 +134,7 @@ const Lineups = ({ players }: { players: Player[] }) => {
                 <FaChevronDown className="w-5 h-5" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-48 p-2">
-                {[3, 5].map((size) => (
+                {[1,2,3,4, 5].map((size) => (
                   <DropdownMenuItem
                     key={size}
                     onClick={() => {
@@ -236,7 +227,7 @@ const Lineups = ({ players }: { players: Player[] }) => {
       </div>
       <div className="w-full lg:w-auto mt-10">
         <div className="overflow-y-auto lg:overflow-visible max-h-[500px] lg:max-h-none px-4">
-          {lineup.length === lineupSize && (
+          {lineup.length === lineupSize ? (
             <div className="flex flex-col lg:grid lg:grid-cols-5 gap-4 w-full justify-center items-center mb-[20vh]">
               {lineup.map((player) => (
                 <div
@@ -247,14 +238,14 @@ const Lineups = ({ players }: { players: Player[] }) => {
                 </div>
               ))}
             </div>
-          )}
-          {lineup.length == 1 && (
+          ) : lineup.length >0 && (
             <div className="flex justify-center">
               <h1 className="text-2xl lg:text-4xl text-orange-1 text-center">
                 That Lineup was too overpowered. Please Try Again
               </h1>
             </div>
           )}
+          
 
           {selectedCoaches.length !== lineupSize && (
             <div className="flex justify-center">
