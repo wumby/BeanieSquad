@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Player } from "@/types";
 import RosterFilters from "./RosterFilters";
@@ -14,13 +14,12 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination";
 
-
-const Roster = ({pageSize} :{pageSize:number}) => {
+const Roster = ({ pageSize, allPlayers }: { pageSize: number; allPlayers: Player[] }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const [players, setPlayers] = useState<Player[]>([]);
-  const [totalPlayers, setTotalPlayers] = useState(0); // ✅ Track total players
+  const [totalPlayers, setTotalPlayers] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
   const page = parseInt(searchParams.get("page") || "1", 10);
@@ -29,27 +28,43 @@ const Roster = ({pageSize} :{pageSize:number}) => {
   const coach = searchParams.get("coach") || "all";
   const sortBy = searchParams.get("sortBy") || "name-asc";
 
-  useEffect(() => {
-    const fetchPlayers = async () => {
-      const res = await fetch(
-        `/api/roster?page=${page}&pageSize=${pageSize}&search=${encodeURIComponent(search)}&rarity=${rarity}&coach=${coach}&sortBy=${sortBy}`,
-      );
-      const data = await res.json();
-      setPlayers(data.players);
-      setTotalPlayers(data.totalPlayers); // ✅ Store total player count
-      setTotalPages(data.totalPages);
-    };
+  const filtered = useMemo(() => {
+    let result = [...allPlayers];
 
-    fetchPlayers();
-  }, [page, search, rarity, coach, sortBy,pageSize]);
+    if (search) {
+      result = result.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
+    }
+
+    if (rarity !== "all") {
+      result = result.filter((p) => p.rarity === rarity);
+    }
+
+    if (coach !== "all") {
+      result = result.filter((p) => p.coach === coach);
+    }
+
+    result.sort((a, b) => {
+      if (sortBy === "name-asc") return a.name.localeCompare(b.name);
+      if (sortBy === "name-desc") return b.name.localeCompare(a.name);
+      return 0;
+    });
+
+    return result;
+  }, [allPlayers, search, rarity, coach, sortBy]);
+
+  useEffect(() => {
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+
+    setTotalPlayers(filtered.length);
+    setTotalPages(Math.ceil(filtered.length / pageSize));
+    setPlayers(filtered.slice(start, end));
+  }, [filtered, page, pageSize]);
 
   const updateQueryParams = (key: string, value: string, resetPage = false) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set(key, value);
-    if (resetPage) {
-      params.set("page", "1");
-    }
-
+    if (resetPage) params.set("page", "1");
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
@@ -57,53 +72,44 @@ const Roster = ({pageSize} :{pageSize:number}) => {
     <>
       <div className="sticky top-5 bg-background-light dark:bg-background-dark z-50 mb-2 px-10 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between">
         <h1 className="text-orange-1 text-6xl lg:text-8xl">Roster</h1>
-
         <RosterFilters
           selectedSort={sortBy}
-          setSelectedSort={(value) => updateQueryParams("sortBy", value, true)}
+          setSelectedSort={(v) => updateQueryParams("sortBy", v, true)}
           selectedRarity={rarity}
-          setSelectedRarity={(value) =>
-            updateQueryParams("rarity", value, true)
-          }
+          setSelectedRarity={(v) => updateQueryParams("rarity", v, true)}
           selectedCoach={coach}
-          setSelectedCoach={(value) => updateQueryParams("coach", value, true)}
+          setSelectedCoach={(v) => updateQueryParams("coach", v, true)}
           searchQuery={search}
-          setSearchQuery={(value) => updateQueryParams("search", value, true)}
+          setSearchQuery={(v) => updateQueryParams("search", v, true)}
         />
       </div>
 
       <div className="flex-1 overflow-y-auto mb-[15vh]">
         <RosterList players={players} />
+
         {totalPages > 1 && (
           <div className="flex flex-col items-center mt-11 mb-[30vh]">
-            {/* ✅ Pagination */}
             <Pagination>
               <PaginationContent className="flex space-x-0 lg:space-x-4">
                 <PaginationItem>
                   {page > 1 ? (
                     <PaginationPrevious
-                      onClick={() =>
-                        updateQueryParams("page", (page - 1).toString())
-                      }
+                      onClick={() => updateQueryParams("page", (page - 1).toString())}
                       className="cursor-pointer"
                     />
                   ) : (
-                    <span className="opacity-50 pointer-events-none">
-                      Previous
-                    </span>
+                    <span className="opacity-50 pointer-events-none">Previous</span>
                   )}
                 </PaginationItem>
 
-                {Array.from({ length: totalPages }, (_, index) => (
-                  <PaginationItem key={index}>
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <PaginationItem key={i}>
                     <PaginationLink
-                      isActive={page === index + 1}
-                      onClick={() =>
-                        updateQueryParams("page", (index + 1).toString())
-                      }
+                      isActive={page === i + 1}
+                      onClick={() => updateQueryParams("page", (i + 1).toString())}
                       className="cursor-pointer"
                     >
-                      {index + 1}
+                      {i + 1}
                     </PaginationLink>
                   </PaginationItem>
                 ))}
@@ -111,9 +117,7 @@ const Roster = ({pageSize} :{pageSize:number}) => {
                 <PaginationItem>
                   {page < totalPages ? (
                     <PaginationNext
-                      onClick={() =>
-                        updateQueryParams("page", (page + 1).toString())
-                      }
+                      onClick={() => updateQueryParams("page", (page + 1).toString())}
                       className="cursor-pointer"
                     />
                   ) : (
@@ -123,7 +127,6 @@ const Roster = ({pageSize} :{pageSize:number}) => {
               </PaginationContent>
             </Pagination>
 
-            {/* ✅ Player Counter */}
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
               {players.length} of {totalPlayers} players
             </p>
