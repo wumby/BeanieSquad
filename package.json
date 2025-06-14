@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write \"app/**/*.{js,ts,jsx,tsx}\" \"components/**/*.{js,ts,jsx,tsx}\""
+
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "^5.1.1",

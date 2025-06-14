@@ -34,7 +34,14 @@ const Hero = async () => {
             />
           </h1>
         </div>
-        <div className="flex justify-center mt-10">
+        <div className="flex justify-center mt-10 gap-4">
+          <Link href="/media">
+            <ShimmerButton className="shadow-2xl w-[15vh] sm:w-[20vh]">
+              <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-orange-1 dark:to-slate-900/10 lg:text-lg">
+                Our Best Plays
+              </span>
+            </ShimmerButton>
+          </Link>
           <Link href="/roster">
             <ShimmerButton className="shadow-2xl w-[15vh] sm:w-[20vh]">
               <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-orange-1 dark:to-slate-900/10 lg:text-lg">

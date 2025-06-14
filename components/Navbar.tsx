@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import ThemeSwitcher from "../app/_components/ThemeSwitcher";
 import SearchCommand from "@/components/SearchBar";
 import styles from "./Navbar.module.css";
 import MobileMenu from "./MobileMenu";
@@ -65,7 +64,6 @@ const Navbar = () => {
         </nav>
         <div className="flex items-center gap-4">
           <SearchCommand />
-          <ThemeSwitcher />
           <MobileMenu />
         </div>
       </div>

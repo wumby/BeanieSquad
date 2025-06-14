@@ -16,17 +16,27 @@ import { ShimmerButton } from "@/components/ui/ShimmerButton";
 const Lineups = ({ players }: { players: Player[] }) => {
   const [lineupSize, setLineupSize] = useState<number>(5);
   const [selectedCoaches, setSelectedCoaches] = useState<Coach[]>([]);
-  const [selectedRarities, setSelectedRarities] = useState<Rarity[]>(Object.values(Rarity));
+  const [selectedRarities, setSelectedRarities] = useState<Rarity[]>(
+    Object.values(Rarity),
+  );
   const [lineup, setLineup] = useState<Player[]>([]);
 
   const MAX_COACH_SELECTION = lineupSize;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const positionArrays: Record<number, any> = {
     1: [[Position.PG, Position.SG, Position.SF, Position.PF, Position.C]],
-    2: [[Position.PG, Position.SG,],[Position.PF, Position.C]],
+    2: [
+      [Position.PG, Position.SG],
+      [Position.PF, Position.C],
+    ],
     3: [Position.PG, [Position.SG, Position.SF], [Position.PF, Position.C]],
-    4: [Position.PG, [Position.SG, Position.SF], [Position.SF, Position.PF], Position.C],
-    5:  [Position.PG, Position.SG, Position.SF, Position.PF, Position.C],
+    4: [
+      Position.PG,
+      [Position.SG, Position.SF],
+      [Position.SF, Position.PF],
+      Position.C,
+    ],
+    5: [Position.PG, Position.SG, Position.SF, Position.PF, Position.C],
   };
 
   const generateLineup = () => {
@@ -34,37 +44,51 @@ const Lineups = ({ players }: { players: Player[] }) => {
       const shuffledPlayers = [...players].sort(() => Math.random() - 0.5);
       const usedCoaches = new Set<string>();
       const selectedPlayers: Player[] = new Array(lineupSize).fill(null);
-      const positionSlots =
-      positionArrays[lineupSize] || [];
+      const positionSlots = positionArrays[lineupSize] || [];
 
-      const shuffledPositions = [...positionSlots].sort(() => Math.random() - 0.5);
+      const shuffledPositions = [...positionSlots].sort(
+        () => Math.random() - 0.5,
+      );
 
       for (let i = 0; i < shuffledPositions.length; i++) {
         const position = shuffledPositions[i];
         const isGrouped = Array.isArray(position);
         const availablePlayers = shuffledPlayers.filter(
           (p) =>
-            selectedCoaches.includes(p.coach) && 
-            selectedRarities.includes(p.rarity) && 
+            selectedCoaches.includes(p.coach) &&
+            selectedRarities.includes(p.rarity) &&
             (isGrouped
               ? position.some((pos) => p.positions.includes(pos))
               : p.positions.includes(position)) &&
-            !usedCoaches.has(p.coach) && 
-            !selectedPlayers.includes(p) 
+            !usedCoaches.has(p.coach) &&
+            !selectedPlayers.includes(p),
         );
 
         if (availablePlayers.length > 0) {
-          const player = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
-          selectedPlayers[i] = player; 
-          usedCoaches.add(player.coach); 
+          const player =
+            availablePlayers[
+              Math.floor(Math.random() * availablePlayers.length)
+            ];
+          selectedPlayers[i] = player;
+          usedCoaches.add(player.coach);
         }
       }
 
       if (selectedPlayers.every((p) => p !== null)) {
         const finalLineup = selectedPlayers.sort((a, b) => {
-          const positionOrder = [Position.PG, Position.SG, Position.SF, Position.PF, Position.C];
-          const posA = Array.isArray(a.positions) ? a.positions[0] : a.positions;
-          const posB = Array.isArray(b.positions) ? b.positions[0] : b.positions;
+          const positionOrder = [
+            Position.PG,
+            Position.SG,
+            Position.SF,
+            Position.PF,
+            Position.C,
+          ];
+          const posA = Array.isArray(a.positions)
+            ? a.positions[0]
+            : a.positions;
+          const posB = Array.isArray(b.positions)
+            ? b.positions[0]
+            : b.positions;
           return positionOrder.indexOf(posA) - positionOrder.indexOf(posB);
         });
 
@@ -78,9 +102,9 @@ const Lineups = ({ players }: { players: Player[] }) => {
 
     for (const player of players) {
       if (
-        selectedCoaches.includes(player.coach) && 
-        selectedRarities.includes(player.rarity) && 
-        !usedCoaches.has(player.coach) && 
+        selectedCoaches.includes(player.coach) &&
+        selectedRarities.includes(player.rarity) &&
+        !usedCoaches.has(player.coach) &&
         backupLineup.length < lineupSize
       ) {
         backupLineup.push(player);
@@ -89,7 +113,13 @@ const Lineups = ({ players }: { players: Player[] }) => {
       if (backupLineup.length === lineupSize) break;
     }
     const finalBackupLineup = backupLineup.sort((a, b) => {
-      const positionOrder = [Position.PG, Position.SG, Position.SF, Position.PF, Position.C];
+      const positionOrder = [
+        Position.PG,
+        Position.SG,
+        Position.SF,
+        Position.PF,
+        Position.C,
+      ];
       const posA = Array.isArray(a.positions) ? a.positions[0] : a.positions;
       const posB = Array.isArray(b.positions) ? b.positions[0] : b.positions;
       return positionOrder.indexOf(posA) - positionOrder.indexOf(posB);
@@ -121,7 +151,7 @@ const Lineups = ({ players }: { players: Player[] }) => {
 
   return (
     <>
-      <div className="sticky top-5 bg-background-light dark:bg-background-dark z-50 mb-2 px-10 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between">
+      <div className="sticky top-5 z-50 mb-2 px-10 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between">
         <h1 className="text-orange-1 text-6xl lg:text-8xl">Lineups</h1>
       </div>
       <div className="flex flex-col lg:flex-row-reverse items-center lg:items-start lg:justify-between w-full px-4 lg:px-10">
@@ -134,7 +164,7 @@ const Lineups = ({ players }: { players: Player[] }) => {
                 <FaChevronDown className="w-5 h-5" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-48 p-2">
-                {[1,2,3,4, 5].map((size) => (
+                {[1, 2, 3, 4, 5].map((size) => (
                   <DropdownMenuItem
                     key={size}
                     onClick={() => {
@@ -173,7 +203,8 @@ const Lineups = ({ players }: { players: Player[] }) => {
                   </label>
                 ))}
                 <p className="text-gray-500 text-sm mt-2">
-                  {selectedRarities.length} / {Object.values(Rarity).length} selected
+                  {selectedRarities.length} / {Object.values(Rarity).length}{" "}
+                  selected
                 </p>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -212,13 +243,15 @@ const Lineups = ({ players }: { players: Player[] }) => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          
 
           <div className="flex justify-start lg:justify-center items-end w-[50%] lg:w-44">
             <ShimmerButton
               onClick={generateLineup}
               className="px-6 py-2 text-xl !text-white"
-              disabled={selectedCoaches.length !== MAX_COACH_SELECTION || selectedRarities.length === 0}
+              disabled={
+                selectedCoaches.length !== MAX_COACH_SELECTION ||
+                selectedRarities.length === 0
+              }
             >
               Generate Lineup
             </ShimmerButton>
@@ -238,14 +271,15 @@ const Lineups = ({ players }: { players: Player[] }) => {
                 </div>
               ))}
             </div>
-          ) : lineup.length >0 && (
-            <div className="flex justify-center">
-              <h1 className="text-2xl lg:text-4xl text-orange-1 text-center">
-                That Lineup was too overpowered. Please Try Again
-              </h1>
-            </div>
+          ) : (
+            lineup.length > 0 && (
+              <div className="flex justify-center">
+                <h1 className="text-2xl lg:text-4xl text-orange-1 text-center">
+                  That Lineup was too overpowered. Please Try Again
+                </h1>
+              </div>
+            )
           )}
-          
 
           {selectedCoaches.length !== lineupSize && (
             <div className="flex justify-center">

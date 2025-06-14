@@ -26,7 +26,10 @@ const MobileMenu = () => {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="md:hidden bg-background-light dark:bg-background-dark z-[300]">
+      <SheetContent
+        side="left"
+        className="md:hidden bg-background-light dark:bg-background-dark z-[300]"
+      >
         <div className="grid gap-4 p-4">
           <Link
             href="/"

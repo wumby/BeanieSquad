@@ -14,7 +14,13 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination";
 
-const Roster = ({ pageSize, allPlayers }: { pageSize: number; allPlayers: Player[] }) => {
+const Roster = ({
+  pageSize,
+  allPlayers,
+}: {
+  pageSize: number;
+  allPlayers: Player[];
+}) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -32,7 +38,9 @@ const Roster = ({ pageSize, allPlayers }: { pageSize: number; allPlayers: Player
     let result = [...allPlayers];
 
     if (search) {
-      result = result.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
+      result = result.filter((p) =>
+        p.name.toLowerCase().includes(search.toLowerCase()),
+      );
     }
 
     if (rarity !== "all") {
@@ -70,8 +78,8 @@ const Roster = ({ pageSize, allPlayers }: { pageSize: number; allPlayers: Player
 
   return (
     <>
-      <div className="sticky top-5 bg-background-light dark:bg-background-dark z-50 mb-2 px-10 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between">
-        <h1 className="text-orange-1 text-6xl lg:text-8xl">Roster</h1>
+      <div className="sticky top-5  z-50 mb-2 px-10 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between">
+        <h1 className="text-orange-1 text-6xl lg:text-8xl ">Roster</h1>
         <RosterFilters
           selectedSort={sortBy}
           setSelectedSort={(v) => updateQueryParams("sortBy", v, true)}
@@ -94,11 +102,15 @@ const Roster = ({ pageSize, allPlayers }: { pageSize: number; allPlayers: Player
                 <PaginationItem>
                   {page > 1 ? (
                     <PaginationPrevious
-                      onClick={() => updateQueryParams("page", (page - 1).toString())}
+                      onClick={() =>
+                        updateQueryParams("page", (page - 1).toString())
+                      }
                       className="cursor-pointer"
                     />
                   ) : (
-                    <span className="opacity-50 pointer-events-none">Previous</span>
+                    <span className="opacity-50 pointer-events-none">
+                      Previous
+                    </span>
                   )}
                 </PaginationItem>
 
@@ -106,7 +118,9 @@ const Roster = ({ pageSize, allPlayers }: { pageSize: number; allPlayers: Player
                   <PaginationItem key={i}>
                     <PaginationLink
                       isActive={page === i + 1}
-                      onClick={() => updateQueryParams("page", (i + 1).toString())}
+                      onClick={() =>
+                        updateQueryParams("page", (i + 1).toString())
+                      }
                       className="cursor-pointer"
                     >
                       {i + 1}
@@ -117,7 +131,9 @@ const Roster = ({ pageSize, allPlayers }: { pageSize: number; allPlayers: Player
                 <PaginationItem>
                   {page < totalPages ? (
                     <PaginationNext
-                      onClick={() => updateQueryParams("page", (page + 1).toString())}
+                      onClick={() =>
+                        updateQueryParams("page", (page + 1).toString())
+                      }
                       className="cursor-pointer"
                     />
                   ) : (

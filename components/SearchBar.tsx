@@ -39,37 +39,45 @@ export default function SearchCommand() {
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput />
         <CommandList>
-          <Link href={'/lineups'}> <CommandItem
-            onSelect={() => {
-              setOpen(false);
-            }}
-          >
-            Lineups
-          </CommandItem>
+          <Link href={"/lineups"}>
+            {" "}
+            <CommandItem
+              onSelect={() => {
+                setOpen(false);
+              }}
+            >
+              Lineups
+            </CommandItem>
           </Link>
-          <Link href={'/roster'}> <CommandItem
-            onSelect={() => {
-              setOpen(false);
-            }}
-          >
-            Roster
-          </CommandItem>
+          <Link href={"/roster"}>
+            {" "}
+            <CommandItem
+              onSelect={() => {
+                setOpen(false);
+              }}
+            >
+              Roster
+            </CommandItem>
           </Link>
-          <Link href={'/apparel'}> <CommandItem
-            onSelect={() => {
-              setOpen(false);
-            }}
-          >
-            Apparel
-          </CommandItem>
+          <Link href={"/apparel"}>
+            {" "}
+            <CommandItem
+              onSelect={() => {
+                setOpen(false);
+              }}
+            >
+              Apparel
+            </CommandItem>
           </Link>
-          <Link href={'/media'}> <CommandItem
-            onSelect={() => {
-              setOpen(false);
-            }}
-          >
-            Media
-          </CommandItem>
+          <Link href={"/media"}>
+            {" "}
+            <CommandItem
+              onSelect={() => {
+                setOpen(false);
+              }}
+            >
+              Media
+            </CommandItem>
           </Link>
         </CommandList>
       </CommandDialog>

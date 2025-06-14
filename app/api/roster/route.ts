@@ -5,7 +5,6 @@ const rarityOrder = ["Legend", "Hall Of Fame", "Gold", "Silver", "Bronze"];
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  
 
   // Read query parameters
   const page = parseInt(searchParams.get("page") || "1", 10);

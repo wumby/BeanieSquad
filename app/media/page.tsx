@@ -1,27 +1,43 @@
-import HighlightOfTheDay from "./_components/HighlightOfTheDay";
-import { highlights } from "@/data";
-import fs from "fs";
-import path from "path";
+import Background from "@/components/Background";
+import VideoClient from "./_components/VideoClient";
 
-const indexFilePath = path.join(process.cwd(), "data", "highlightIndex.json");
+export default function VideoPage() {
+  const videos = [
+    { id: 1, title: "Chaz Puts Em Down", src: "/videos/chaz.mp4" },
+    {
+      id: 2,
+      title: "Chemo with a wet jumper",
+      src: "/videos/chemo_airball.mp4",
+    },
+    {
+      id: 3,
+      title: "Reggie Gives out Chestnuts",
+      src: "/videos/reggie_chestnuts.mp4",
+    },
+    { id: 4, title: "Willie POTY", src: "/videos/willie_career.mp4" },
+    { id: 5, title: "Doo Takes a Kid to School", src: "/videos/doo_park.mp4" },
+    { id: 6, title: "Hank Gets Crafty", src: "/videos/hank_crafty.mp4" },
+    { id: 7, title: "Hank Joins the Vikings", src: "/videos/hank_vikings.mp4" },
+    { id: 8, title: "Mascots Get Jiggy", src: "/videos/mascots_jiggy.mp4" },
+    { id: 9, title: "Confusion Into a Lob", src: "/videos/gumby_lob.mp4" },
+    {
+      id: 10,
+      title: "Chemo Gets Embarassed",
+      src: "/videos/chemo_crossed.mp4",
+    },
+    { id: 11, title: "Frank with Anger", src: "/videos/frank_putback.mp4" },
+    {
+      id: 12,
+      title: "Gumby From the Parking Lot",
+      src: "/videos/gumby_parkinglot.mp4",
+    },
+    { id: 13, title: "Shlum Bullies Kid", src: "/videos/shlum_embarasses.mp4" },
+  ];
 
-export default async function MediaPage() {
-  let lastIndex = 0;
-  try {
-    const data = fs.readFileSync(indexFilePath, "utf-8");
-    lastIndex = JSON.parse(data).lastIndex;
-  } catch (error) {
-    console.error("Error reading index file:", error);
-  }
-  const nextIndex = (lastIndex + 1) % highlights.length;
-
-  try {
-    fs.writeFileSync(indexFilePath, JSON.stringify({ lastIndex: nextIndex }), "utf-8");
-  } catch (error) {
-    console.error("Error writing index file:", error);
-  }
-
-  return <HighlightOfTheDay highlight={highlights[nextIndex]} />;
+  return (
+    <div className="flex h-screen">
+      <VideoClient videos={videos} />
+      <Background />
+    </div>
+  );
 }
-
-export const revalidate = 44400;
