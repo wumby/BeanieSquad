@@ -35,6 +35,7 @@ export default function VideoClient({ videos }: { videos: Video[] }) {
             {video.title}
           </div>
         ))}
+        <div className="pb-60" />
       </div>
 
       <div className="flex-1 p-4 flex flex-col items-center justify-start">
@@ -52,7 +53,7 @@ export default function VideoClient({ videos }: { videos: Video[] }) {
           <h1 className="flex items-center text-2xl lg:text-6xl font-semibold mb-4 text-orange-1 !m-0">
             {selectedVideo.title}
           </h1>
-          {selectedId <= videos.length && (
+          {selectedId < videos.length && (
             <ShimmerButton
               className="shadow-2xl w-[5vh] "
               onClick={() => setSelectedId(selectedId + 1)}
@@ -79,21 +80,22 @@ export default function VideoClient({ videos }: { videos: Video[] }) {
           />
           Your browser does not support the video tag.
         </video>
-       <div className="w-full max-h-[300px] overflow-y-auto mt-6 border-t border-orange-1 md:hidden block">
-  {videos.map((video) => (
-    <div
-      key={video.id}
-      className={`text-md lg:text-lg cursor-pointer p-2 rounded mb-2 ${
-        selectedId === video.id ? "text-orange-1" : "hover:text-orange-1"
-      }`}
-      onClick={() => setSelectedId(video.id)}
-    >
-      {video.title}
-    </div>
-  ))}
-  <div className="pb-60" />
-
-</div>
+        <div className="w-full max-h-[300px] overflow-y-auto mt-6 border-t border-orange-1 md:hidden block">
+          {videos.map((video) => (
+            <div
+              key={video.id}
+              className={`text-md lg:text-lg cursor-pointer p-2 rounded mb-2 ${
+                selectedId === video.id
+                  ? "text-orange-1"
+                  : "hover:text-orange-1"
+              }`}
+              onClick={() => setSelectedId(video.id)}
+            >
+              {video.title}
+            </div>
+          ))}
+          <div className="pb-60" />
+        </div>
       </div>
     </div>
   );

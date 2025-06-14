@@ -26,12 +26,13 @@ export default function VideoPage() {
       src: "/videos/chemo_crossed.mp4",
     },
     { id: 11, title: "Frank with Anger", src: "/videos/frank_putback.mp4" },
+    { id: 12, title: "Shlum Baptizes Soul", src: "/videos/shlum_baptizes.mp4" },
     {
-      id: 12,
+      id: 13,
       title: "Gumby From the Parking Lot",
       src: "/videos/gumby_parkinglot.mp4",
     },
-    { id: 13, title: "Shlum Bullies Kid", src: "/videos/shlum_embarasses.mp4" },
+    { id: 14, title: "Shlum Bullies Kid", src: "/videos/shlum_embarasses.mp4" },
   ];
 
   return (
