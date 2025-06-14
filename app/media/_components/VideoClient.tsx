@@ -23,7 +23,7 @@ export default function VideoClient({ videos }: { videos: Video[] }) {
 
   return (
     <div className="flex w-full mt-10">
-      <div className="w-[20%] p-4 border-r overflow-y-auto border-orange-1 ">
+      <div className="w-[20%] p-4 border-r overflow-y-auto border-orange-1 md:block hidden ">
         {videos.map((video) => (
           <div
             key={video.id}
