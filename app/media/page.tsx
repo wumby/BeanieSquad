@@ -35,7 +35,7 @@ export default function VideoPage() {
   ];
 
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       <VideoClient videos={videos} />
       <Background />
     </div>
