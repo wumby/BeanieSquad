@@ -22,7 +22,7 @@ export default function VideoClient({ videos }: { videos: Video[] }) {
   }, [selectedVideo.src]);
 
   return (
-    <div className="flex w-full mt-10">
+    <div className="flex w-full mt-10 mb-10">
       <div className="w-[20%] p-4 border-r overflow-y-auto border-orange-1 md:block hidden ">
         {videos.map((video) => (
           <div
@@ -79,6 +79,19 @@ export default function VideoClient({ videos }: { videos: Video[] }) {
           />
           Your browser does not support the video tag.
         </video>
+        <div className="w-full p-4 border-r overflow-y-auto border-orange-1 md:hidden block ">
+        {videos.map((video) => (
+          <div
+            key={video.id}
+            className={`text-md lg:text-lg cursor-pointer p-2 rounded mb-2 ${
+              selectedId === video.id ? "text-orange-1" : "hover:text-orange-1"
+            }`}
+            onClick={() => setSelectedId(video.id)}
+          >
+            {video.title}
+          </div>
+        ))}
+      </div>
       </div>
     </div>
   );
