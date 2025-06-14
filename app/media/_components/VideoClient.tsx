@@ -49,7 +49,7 @@ export default function VideoClient({ videos }: { videos: Video[] }) {
               </span>
             </ShimmerButton>
           )}
-          <h1 className="flex items-center text-4xl lg:text-6xl font-semibold mb-4 text-orange-1 !m-0">
+          <h1 className="flex items-center text-2xl lg:text-6xl font-semibold mb-4 text-orange-1 !m-0">
             {selectedVideo.title}
           </h1>
           {selectedId <= videos.length && (
