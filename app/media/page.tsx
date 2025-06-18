@@ -33,6 +33,7 @@ export default function VideoPage() {
       src: "/videos/gumby_parkinglot.mp4",
     },
     { id: 14, title: "Shlum Bullies Kid", src: "/videos/shlum_embarasses.mp4" },
+    { id: 15, title: "Droopy gets Chestnuts after Vacation", src: "/videos/droopy_chestnuts.mp4" },
   ];
 
   return (
