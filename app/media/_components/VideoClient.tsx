@@ -116,7 +116,7 @@ export default function VideoClient({ videos }: { videos: Video[] }) {
           autoPlay
           muted
           loop
-          className="w-full max-w-[1200px] max-h-[70vh] rounded shadow mt-10"
+          className="w-full max-w-[1200px] max-h-[60vh] rounded shadow mt-10"
         >
           <source
             src={`${selectedVideo.src}?v=${selectedVideo.id}`}

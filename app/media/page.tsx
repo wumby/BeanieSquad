@@ -102,13 +102,13 @@ export default function VideoPage() {
     {
       id: 17,
       title: "Steve and Tucker B2B",
-      src: "/videos/steve_tucker_b2b.MP4",
+      src: "/videos/steve_tucker.MP4",
       game: "2k17",
     },
     {
       id: 18,
       title: "Tucker Takes Flight",
-      src: "/videos/tucker_takes_flight.MP4",
+      src: "/videos/tucker_flies.MP4",
       game: "2k14",
     },
   ];
