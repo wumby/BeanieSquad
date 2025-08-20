@@ -117,10 +117,16 @@ export default function VideoPage() {
       src: "/videos/tucker_flies.MP4",
       game: "2k14",
     },
-     {
+    {
       id: 20,
       title: "Opponent Has CTE",
       src: "/videos/opponent_has_cte.MP4",
+      game: "2k25",
+    },
+    {
+      id: 21,
+      title: "Double-R Loves Honey",
+      src: "/videos/double_r_honey.MP4",
       game: "2k25",
     },
   ];
