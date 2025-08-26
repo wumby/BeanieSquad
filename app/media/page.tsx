@@ -129,6 +129,66 @@ export default function VideoPage() {
       src: "/videos/double_r_honey.MP4",
       game: "2k25",
     },
+    {
+      id: 22,
+      title: "Double Dose of Testes",
+      src: "/videos/double_dose_testes.mp4",
+      game: "2k25",
+    },
+    {
+      id: 23,
+      title: "Chemo With a Strong Take",
+      src: "/videos/chemo_strong_take.mp4",
+      game: "2k25",
+    },
+    {
+      id: 24,
+      title: "Carrot Cake Show Off",
+      src: "/videos/cc_flies.mp4",
+      game: "2k25",
+    },
+    {
+      id: 25,
+      title: "Larry Clamps FTW",
+      src: "/videos/larry_clamps_ftw.mp4",
+      game: "2k25",
+    },
+    {
+      id: 26,
+      title: "Wumby Owl Vision",
+      src: "/videos/wumby_owl_vision.mp4",
+      game: "2k25",
+    },
+    {
+      id: 27,
+      title: "Squad Tries Pushups",
+      src: "/videos/beanie_squad_pushups.mp4",
+      game: "2k25",
+    },
+    {
+      id: 28,
+      title: "Gumby Jelly",
+      src: "/videos/gumby_jelly.mp4",
+      game: "2k25",
+    },
+    {
+      id: 29,
+      title: "Donald Goes Swimming",
+      src: "/videos/donald_swimming.mp4",
+      game: "2k25",
+    },
+    {
+      id: 30,
+      title: "Three Musketeers",
+      src: "/videos/three_musketeers.mp4",
+      game: "2k25",
+    },
+    {
+      id: 31,
+      title: "Keanus Vision",
+      src: "/videos/keanu_vision.mp4",
+      game: "2k25",
+    },
   ];
 
   return (
