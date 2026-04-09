@@ -43,8 +43,13 @@ const Hero = async () => {
             </ShimmerButton>
           </Link>
           <Link href="/roster">
-            <ShimmerButton className="shadow-2xl w-[20vh]">
-              <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-orange-1 dark:to-slate-900/10 lg:text-lg">
+            <ShimmerButton
+              className="shadow-2xl w-[20vh]"
+              background="rgba(22, 28, 36, 0.72)"
+              shimmerColor="#64748b"
+              shimmerDelay="-1.6s"
+            >
+              <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-slate-200 lg:text-lg">
                 See Our Team
               </span>
             </ShimmerButton>

@@ -1,6 +1,7 @@
 "use client";
 
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState, useMemo } from "react";
 
 interface Video {
@@ -87,11 +88,10 @@ export default function VideoClient({ videos }: { videos: Video[] }) {
           {selectedId > 1 && (
             <ShimmerButton
               className="shadow-2xl w-[5vh]"
+              aria-label="Previous video"
               onClick={() => setSelectedId(selectedId - 1)}
             >
-              <span className="text-sm font-medium text-white lg:text-lg">
-                Prev
-              </span>
+              <ChevronLeft className="h-5 w-5 text-white lg:h-6 lg:w-6" />
             </ShimmerButton>
           )}
           <h1 className="flex items-center text-2xl lg:text-6xl font-semibold mb-4 text-orange-1 !m-0">
@@ -100,11 +100,10 @@ export default function VideoClient({ videos }: { videos: Video[] }) {
           {selectedId < filteredVideos[filteredVideos.length - 1]?.id && (
             <ShimmerButton
               className="shadow-2xl w-[5vh]"
+              aria-label="Next video"
               onClick={() => setSelectedId(selectedId + 1)}
             >
-              <span className="text-sm font-medium text-white lg:text-lg">
-                Next
-              </span>
+              <ChevronRight className="h-5 w-5 text-white lg:h-6 lg:w-6" />
             </ShimmerButton>
           )}
         </div>

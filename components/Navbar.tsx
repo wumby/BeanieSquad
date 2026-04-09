@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import SearchCommand from "@/components/SearchBar";
 import styles from "./Navbar.module.css";
 import MobileMenu from "./MobileMenu";
 import {
@@ -63,7 +62,6 @@ const Navbar = () => {
           </DropdownMenu>
         </nav>
         <div className="flex items-center gap-4">
-          <SearchCommand />
           <MobileMenu />
         </div>
       </div>

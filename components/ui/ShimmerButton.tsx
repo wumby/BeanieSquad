@@ -7,6 +7,7 @@ export interface ShimmerButtonProps extends ComponentPropsWithoutRef<"button"> {
   shimmerSize?: string;
   borderRadius?: string;
   shimmerDuration?: string;
+  shimmerDelay?: string;
   background?: string;
   className?: string;
   children?: React.ReactNode;
@@ -21,6 +22,7 @@ export const ShimmerButton = React.forwardRef<
       shimmerColor = "#ff9500",
       shimmerSize = "0.25em",
       shimmerDuration = "2s",
+      shimmerDelay = "0s",
       borderRadius = "100px",
       background = "rgba(0, 0, 0, 1)",
       className,
@@ -57,12 +59,20 @@ export const ShimmerButton = React.forwardRef<
           )}
         >
           {/* spark */}
-          <div className="absolute inset-0 h-[100cqh] animate-shimmer-slide [aspect-ratio:1] [border-radius:0] [mask:none]">
+          <div
+            className="absolute inset-0 h-[100cqh] animate-shimmer-slide [aspect-ratio:1] [border-radius:0] [mask:none]"
+            style={{ animationDelay: shimmerDelay }}
+          >
             {/* spark before */}
-            <div className="absolute -inset-full w-auto rotate-0 animate-spin-around [background:conic-gradient(from_calc(270deg-(var(--spread)*0.5)),transparent_0,var(--shimmer-color)_var(--spread),transparent_var(--spread))] [translate:0_0]" />
+            <div
+              className="absolute -inset-full w-auto rotate-0 animate-spin-around [background:conic-gradient(from_calc(270deg-(var(--spread)*0.5)),transparent_0,var(--shimmer-color)_var(--spread),transparent_var(--spread))] [translate:0_0]"
+              style={{ animationDelay: shimmerDelay }}
+            />
           </div>
         </div>
-        {children}
+        <span className="relative z-10 flex items-center justify-center">
+          {children}
+        </span>
 
         {/* Highlight */}
         <div
