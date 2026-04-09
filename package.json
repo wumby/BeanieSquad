@@ -3,12 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "format": "prettier --write \"app/**/*.{js,ts,jsx,tsx}\" \"components/**/*.{js,ts,jsx,tsx}\""
-
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "^5.1.1",
@@ -28,7 +27,7 @@
     "lucide-react": "^0.474.0",
     "mini-svg-data-uri": "^1.4.4",
     "motion": "^12.1.0",
-    "next": "15.1.6",
+    "next": "^16.2.3",
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -44,7 +43,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.1.6",
+    "eslint-config-next": "^16.2.3",
     "postcss": "^8",
     "prettier": "^3.4.2",
     "tailwindcss": "^3.4.1",
